@@ -29,7 +29,7 @@ module Padrino
     class << self
       def inherited(base)
         begun_at = Time.now
-        CALLERS_TO_IGNORE.concat(PADRINO_IGNORE_CALLERS)
+        Sinatra::Base.const_set(:CALLERS_TO_IGNORE, (CALLERS_TO_IGNORE + PADRINO_IGNORE_CALLERS).freeze)
         super(base)
         base.prerequisites.replace(self.prerequisites.dup)
         base.default_configuration!
